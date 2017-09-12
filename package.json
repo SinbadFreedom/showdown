@@ -1,6 +1,6 @@
 {
   "name": "sinbad_showdown",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Markdown to HTML converter written in Javascript",
   "author": "Sinbad",
   "homepage": "https://github.com/SinbadFreedom/showdown",
@@ -37,7 +37,7 @@
     "test": "grunt test"
   },
   "bin": {
-    "sinbad_showdown": "bin/sinbad_showdown.js"
+    "sinbad_showdown": "dist/sinbad_showdown.js"
   },
   "devDependencies": {
     "chai": "^3.5.0",
