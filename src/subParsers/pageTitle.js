@@ -21,13 +21,13 @@ showdown.subParser('pageTitle', function (text, options, globals) {
   text.replace(setextRegexH2, function (matchFound, m1) {
     /** === 一级标题 */
     var header2 = showdown.subParser('spanGamut')(m1, options, globals);
-    array.push(header2)
+    array.push(header2);
   });
 
   text.replace(setextRegexH1, function (wholeMatch, m1) {
     /** --- 二级标题 */
     var header1 = showdown.subParser('spanGamut')(m1, options, globals);
-    array.push(header1)
+    array.push(header1);
   });
 
   return array;
