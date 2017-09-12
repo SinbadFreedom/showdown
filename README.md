@@ -42,7 +42,7 @@ You can download the latest release tarball directly from [releases][releases]
 
 ### npm (server-side)
 
-    npm install showdown
+    npm install sibnad_showdown
 
 ### NuGet package
 
@@ -100,7 +100,7 @@ Check our [wiki pages][wiki] for examples and a more in-depth documentation.
 ### Node
 
 ```js
-var showdown  = require('showdown'),
+var showdown  = require('sibnad_showdown'),
     converter = new showdown.Converter(),
     text      = '#hello, markdown!',
     html      = converter.makeHtml(text);
