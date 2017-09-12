@@ -27,7 +27,8 @@ showdown.subParser('tables', function (text, options, globals) {
     }
     header = showdown.subParser('spanGamut')(header, options, globals);
 
-    return '<th' + id + style + '>' + header + '</th>\n';
+    // return '<th' + id + style + '>' + header + '</th>\n';
+    return '<th' + style + '>' + header + '</th>\n';
   }
 
   function parseCells (cell, style) {

@@ -53,7 +53,8 @@ showdown.subParser('images', function (text, options, globals) {
       .replace(showdown.helper.regexes.asteriskAndDash, showdown.helper.escapeCharactersCallback);
     //url = showdown.helper.escapeCharacters(url, '*_', false);
     url = url.replace(showdown.helper.regexes.asteriskAndDash, showdown.helper.escapeCharactersCallback);
-    var result = '<img src="' + url + '" alt="' + altText + '"';
+    // var result = '<img src="' + url + '" alt="' + altText + '"';
+    var result = '<img class="center-block img-responsive" src="' + url + '" alt="' + altText + '"';
 
     if (title) {
       title = title

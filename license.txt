@@ -1,3 +1,7 @@
+Sinbad_Showdown Copyright (c) 2017, Sinbad
+<http://www.dashidan.com./>
+All rights reserved.
+
 Showdown Copyright (c) 2007, John Fraser
 <http://www.attacklab.net/>
 All rights reserved.
