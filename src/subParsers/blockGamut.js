@@ -28,5 +28,8 @@ showdown.subParser('blockGamut', function (text, options, globals) {
 
   text = globals.converter._dispatch('blockGamut.after', text, options, globals);
 
+  /** 一级标题===和二级标题---*/
+  text = showdown.subParser('pageTitle')(text, options, globals);
+
   return text;
 });
