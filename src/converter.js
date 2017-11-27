@@ -10,56 +10,58 @@
  */
 showdown.Converter = function (converterOptions) {
   'use strict';
-
+  
   var
     /**
      * Options used by this converter
      * @private
      * @type {{}}
      */
-    options = {},
-
+    options = {
+      'headerLevelStart': 2
+    },
+    
     /**
      * Language extensions used by this converter
      * @private
      * @type {Array}
      */
     langExtensions = [],
-
+    
     /**
      * Output modifiers extensions used by this converter
      * @private
      * @type {Array}
      */
     outputModifiers = [],
-
+    
     /**
      * Event listeners
      * @private
      * @type {{}}
      */
     listeners = {},
-
+    
     /**
      * The flavor set in this converter
      */
     setConvFlavor = setFlavor;
-
+  
   _constructor();
-
+  
   /**
    * Converter constructor
    * @private
    */
   function _constructor() {
     converterOptions = converterOptions || {};
-
+    
     for (var gOpt in globalOptions) {
       if (globalOptions.hasOwnProperty(gOpt)) {
         options[gOpt] = globalOptions[gOpt];
       }
     }
-
+    
     // Merge options
     if (typeof converterOptions === 'object') {
       for (var opt in converterOptions) {
@@ -71,12 +73,12 @@ showdown.Converter = function (converterOptions) {
       throw Error('Converter expects the passed parameter to be an object, but ' + typeof converterOptions +
         ' was passed instead.');
     }
-
+    
     if (options.extensions) {
       showdown.helper.forEach(options.extensions, _parseExtension);
     }
   }
-
+  
   /**
    * Parse extension
    * @param {*} ext
@@ -84,13 +86,13 @@ showdown.Converter = function (converterOptions) {
    * @private
    */
   function _parseExtension(ext, name) {
-
+    
     name = name || null;
     // If it's a string, the extension was previously loaded
     if (showdown.helper.isString(ext)) {
       ext = showdown.helper.stdExtName(ext);
       name = ext;
-
+      
       // LEGACY_SUPPORT CODE
       if (showdown.extensions[ext]) {
         console.warn('DEPRECATION WARNING: ' + ext + ' is an old extension that uses a deprecated loading method.' +
@@ -98,35 +100,35 @@ showdown.Converter = function (converterOptions) {
         legacyExtensionLoading(showdown.extensions[ext], ext);
         return;
         // END LEGACY SUPPORT CODE
-
+        
       } else if (!showdown.helper.isUndefined(extensions[ext])) {
         ext = extensions[ext];
-
+        
       } else {
         throw Error('Extension "' + ext + '" could not be loaded. It was either not found or is not a valid extension.');
       }
     }
-
+    
     if (typeof ext === 'function') {
       ext = ext();
     }
-
+    
     if (!showdown.helper.isArray(ext)) {
       ext = [ext];
     }
-
+    
     var validExt = validate(ext, name);
     if (!validExt.valid) {
       throw Error(validExt.error);
     }
-
+    
     for (var i = 0; i < ext.length; ++i) {
       switch (ext[i].type) {
-
+        
         case 'lang':
           langExtensions.push(ext[i]);
           break;
-
+        
         case 'output':
           outputModifiers.push(ext[i]);
           break;
@@ -139,9 +141,9 @@ showdown.Converter = function (converterOptions) {
         }
       }
     }
-
+    
   }
-
+  
   /**
    * LEGACY_SUPPORT
    * @param {*} ext
@@ -155,11 +157,11 @@ showdown.Converter = function (converterOptions) {
       ext = [ext];
     }
     var valid = validate(ext, name);
-
+    
     if (!valid.valid) {
       throw Error(valid.error);
     }
-
+    
     for (var i = 0; i < ext.length; ++i) {
       switch (ext[i].type) {
         case 'lang':
@@ -173,7 +175,7 @@ showdown.Converter = function (converterOptions) {
       }
     }
   }
-
+  
   /**
    * Listen to an event
    * @param {string} name
@@ -183,23 +185,23 @@ showdown.Converter = function (converterOptions) {
     if (!showdown.helper.isString(name)) {
       throw Error('Invalid argument in converter.listen() method: name must be a string, but ' + typeof name + ' given');
     }
-
+    
     if (typeof callback !== 'function') {
       throw Error('Invalid argument in converter.listen() method: callback must be a function, but ' + typeof callback + ' given');
     }
-
+    
     if (!listeners.hasOwnProperty(name)) {
       listeners[name] = [];
     }
     listeners[name].push(callback);
   }
-
+  
   function rTrimInputText(text) {
     var rsp = text.match(/^\s*/)[0].length,
       rgx = new RegExp('^\\s{0,' + rsp + '}', 'gm');
     return text.replace(rgx, '');
   }
-
+  
   /**
    * Dispatch an event
    * @private
@@ -220,7 +222,7 @@ showdown.Converter = function (converterOptions) {
     }
     return text;
   };
-
+  
   /**
    * Listen to an event
    * @param {string} name
@@ -231,7 +233,7 @@ showdown.Converter = function (converterOptions) {
     listen(name, callback);
     return this;
   };
-
+  
   /**
    * Converts a markdown string into HTML
    * @param {string} text
@@ -242,7 +244,7 @@ showdown.Converter = function (converterOptions) {
     if (!text) {
       return text;
     }
-
+    
     var globals = {
       gHtmlBlocks: [],
       gHtmlMdBlocks: [],
@@ -257,34 +259,34 @@ showdown.Converter = function (converterOptions) {
       converter: this,
       ghCodeBlocks: []
     };
-
+    
     // This lets us use ¨ trema as an escape char to avoid md5 hashes
     // The choice of character is arbitrary; anything that isn't
     // magic in Markdown will work.
     text = text.replace(/¨/g, '¨T');
-
+    
     // Replace $ with ¨D
     // RegExp interprets $ as a special character
     // when it's in a replacement string
     text = text.replace(/\$/g, '¨D');
-
+    
     // Standardize line endings
     text = text.replace(/\r\n/g, '\n'); // DOS to Unix
     text = text.replace(/\r/g, '\n'); // Mac to Unix
-
+    
     // Stardardize line spaces (nbsp causes trouble in older browsers and some regex flavors)
     text = text.replace(/\u00A0/g, ' ');
-
+    
     if (options.smartIndentationFix) {
       text = rTrimInputText(text);
     }
-
+    
     // Make sure text begins and ends with a couple of newlines:
     text = '\n\n' + text + '\n\n';
-
+    
     // detab
     text = showdown.subParser('detab')(text, options, globals);
-
+    
     /**
      * Strip any lines consisting only of spaces and tabs.
      * This makes subsequent regexs easier to write, because we can
@@ -292,12 +294,12 @@ showdown.Converter = function (converterOptions) {
      * contorted like /[ \t]*\n+/
      */
     text = text.replace(/^[ \t]+$/mg, '');
-
+    
     //run languageExtensions
     showdown.helper.forEach(langExtensions, function (ext) {
       text = showdown.subParser('runExtension')(ext, text, options, globals);
     });
-
+    
     // run the sub parsers
     text = showdown.subParser('hashPreCodeTags')(text, options, globals);
     text = showdown.subParser('githubCodeBlocks')(text, options, globals);
@@ -307,21 +309,21 @@ showdown.Converter = function (converterOptions) {
     text = showdown.subParser('blockGamut')(text, options, globals);
     text = showdown.subParser('unhashHTMLSpans')(text, options, globals);
     text = showdown.subParser('unescapeSpecialChars')(text, options, globals);
-
+    
     // attacklab: Restore dollar signs
     text = text.replace(/¨D/g, '$$');
-
+    
     // attacklab: Restore tremas
     text = text.replace(/¨T/g, '¨');
-
+    
     // Run output modifiers
     showdown.helper.forEach(outputModifiers, function (ext) {
       text = showdown.subParser('runExtension')(ext, text, options, globals);
     });
-
+    
     return text;
   };
-
+  
   /**
    * Set an option of this Converter instance
    * @param {string} key
@@ -330,7 +332,7 @@ showdown.Converter = function (converterOptions) {
   this.setOption = function (key, value) {
     options[key] = value;
   };
-
+  
   /**
    * Get the option of this Converter instance
    * @param {string} key
@@ -339,7 +341,7 @@ showdown.Converter = function (converterOptions) {
   this.getOption = function (key) {
     return options[key];
   };
-
+  
   /**
    * Get the options of this Converter instance
    * @returns {{}}
@@ -347,7 +349,7 @@ showdown.Converter = function (converterOptions) {
   this.getOptions = function () {
     return options;
   };
-
+  
   /**
    * Add extension to THIS converter
    * @param {{}} extension
@@ -357,7 +359,7 @@ showdown.Converter = function (converterOptions) {
     name = name || null;
     _parseExtension(extension, name);
   };
-
+  
   /**
    * Use a global registered extension with THIS converter
    * @param {string} extensionName Name of the previously registered extension
@@ -365,7 +367,7 @@ showdown.Converter = function (converterOptions) {
   this.useExtension = function (extensionName) {
     _parseExtension(extensionName);
   };
-
+  
   /**
    * Set the flavor THIS converter should use
    * @param {string} name
@@ -382,7 +384,7 @@ showdown.Converter = function (converterOptions) {
       }
     }
   };
-
+  
   /**
    * Get the currently set flavor of this converter
    * @returns {string}
@@ -390,7 +392,7 @@ showdown.Converter = function (converterOptions) {
   this.getFlavor = function () {
     return setConvFlavor;
   };
-
+  
   /**
    * Remove an extension from THIS converter.
    * Note: This is a costly operation. It's better to initialize a new converter
@@ -415,7 +417,7 @@ showdown.Converter = function (converterOptions) {
       }
     }
   };
-
+  
   /**
    * Get all extension of THIS converter
    * @returns {{language: Array, output: Array}}
