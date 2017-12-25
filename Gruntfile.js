@@ -192,11 +192,11 @@ module.exports = function (grunt) {
   /**
    * Lint tasks
    */
-  grunt.registerTask('lint', function () {
-    'use strict';
-    grunt.loadNpmTasks('grunt-eslint');
-    grunt.task.run('jshint', 'eslint');
-  });
+  //grunt.registerTask('lint', function () {
+  //  'use strict';
+  //  grunt.loadNpmTasks('grunt-eslint');
+  //  grunt.task.run('jshint', 'eslint');
+  //});
 
   /**
    * Performance task
