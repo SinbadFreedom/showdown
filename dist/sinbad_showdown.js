@@ -1548,12 +1548,12 @@ showdown.subParser('blockGamut', function (text, options, globals) {
   var pageTitleList = '';
   if(pageTitleArray && pageTitleArray.length > 0) {
     pageTitleList += '<div>';
-    /** 文章标题*/
-    pageTitleList += '<div class="dsd_title"><h1>' + pageTitleArray[0] + '</h1></div>';
+    // /** 文章标题*/
+    // pageTitleList += '<div class="dsd_title"><h1>' + pageTitleArray[0] + '</h1></div>';
     /** 子标题*/
     if(pageTitleArray.length > 0) {
       pageTitleList += '<div class="dsd_catalog">';
-      for(var i = 1; i < pageTitleArray.length; i++) {
+      for(var i = 0; i < pageTitleArray.length; i++) {
         var id = pageTitleArray[i].split(' ')[0];
         pageTitleList += '<p><a href="#' + id + '">' + pageTitleArray[i] + '</a></p>';
         // if(i < pageTitleArray.length -1){
