@@ -17,16 +17,18 @@ showdown.subParser('headers', function (text, options, globals) {
       setextRegexH2 = (options.smoothLivePreview) ? /^(.+)[ \t]*\n-{2,}[ \t]*\n+/gm : /^(.+)[ \t]*\n-+[ \t]*\n+/gm;
 
   text = text.replace(setextRegexH1, function (wholeMatch, m1) {
-    // var spanGamut = showdown.subParser('spanGamut')(m1, options, globals),
-    //     hID = (options.noHeaderId) ? '' : ' id="' + headerId(m1) + '"',
-    //     hLevel = headerLevelStart,
-    //   /** 一级标题 ===*/
-    //     hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
-    // return showdown.subParser('hashBlock')(hashBlock, options, globals);
-    /** 这里移除一级标题, 采用pageTitle显示*/
-    console.log(wholeMatch);
-    console.log(m1);
-    return '';
+    var spanGamut = showdown.subParser('spanGamut')(m1, options, globals),
+        hID = (options.noHeaderId) ? '' : ' id="' + headerId(m1) + '"',
+        hLevel = headerLevelStart,
+      /** 一级标题 ===*/
+        // hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
+      hashBlock = '<div class="dsd_title"><a href="#top" ' + hID + '><h1>' + spanGamut + '</h1></a></div>';
+    // hashBlock = '<div class="dsd_title"><h1>' + spanGamut +'</h1></div>';
+    return showdown.subParser('hashBlock')(hashBlock, options, globals);
+    // /** 这里移除一级标题, 采用pageTitle显示*/
+    // console.log(wholeMatch);
+    // console.log(m1);
+    // return '';
   });
 
   text = text.replace(setextRegexH2, function (matchFound, m1) {
@@ -36,7 +38,7 @@ showdown.subParser('headers', function (text, options, globals) {
       /** 二级标题 ---*/
         // hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
         // hashBlock = '<h4' + hID + ' class="alert alert-success" >' + spanGamut + '</h4>';
-        hashBlock = '<div class="dsd_title"><a href="#top" ' + hID + '>' + spanGamut + '</a></div>';
+        hashBlock = '<div class="dsd_title_1"><a href="#top" ' + hID + '>' + spanGamut + '</a></div>';
     return showdown.subParser('hashBlock')(hashBlock, options, globals);
   });
 
