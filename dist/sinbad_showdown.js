@@ -1,4 +1,4 @@
-;/*! sinbad_showdown 26-12-2017 */
+;/*! sinbad_showdown 27-12-2017 */
 (function(){
 /**
  * Created by Tivie on 13-07-2015.
@@ -2128,7 +2128,7 @@ showdown.subParser('headers', function (text, options, globals) {
         hLevel = headerLevelStart,
       /** 一级标题 ===*/
         // hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
-      hashBlock = '<div class="dsd_title"><a href="#top" ' + hID + '><h2>' + spanGamut + '</h2></a></div>';
+      hashBlock = '<div class="dsd_title_1"><a href="#top" ' + hID + '><h2>' + spanGamut + '</h2></a></div>';
     // hashBlock = '<div class="dsd_title"><h1>' + spanGamut +'</h1></div>';
     return showdown.subParser('hashBlock')(hashBlock, options, globals);
     // /** 这里移除一级标题, 采用pageTitle显示*/
@@ -2144,7 +2144,7 @@ showdown.subParser('headers', function (text, options, globals) {
       /** 二级标题 ---*/
         // hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
         // hashBlock = '<h4' + hID + ' class="alert alert-success" >' + spanGamut + '</h4>';
-        hashBlock = '<div class="dsd_title_1"><a href="#top" ' + hID + '>' + spanGamut + '</a></div>';
+        hashBlock = '<div class="dsd_title_2"><a href="#top" ' + hID + '>' + spanGamut + '</a></div>';
     return showdown.subParser('hashBlock')(hashBlock, options, globals);
   });
 
@@ -2649,7 +2649,8 @@ showdown.subParser('pageTitle', function (text, options, globals) {
   array.sort(function (a, b) {
                var index0 = a.split(" ")[0];
                var index1 = b.split(" ")[0];
-               return Number(index0) > Number(index1) ? 1 : -1;
+               /** 校正小数1.2, 1.21的大小比较*/
+               return Number(index0) * 1000 > Number(index1) * 1000 ? 1 : -1;
              }
   );
   return array;

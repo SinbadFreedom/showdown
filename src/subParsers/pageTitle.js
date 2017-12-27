@@ -34,7 +34,8 @@ showdown.subParser('pageTitle', function (text, options, globals) {
   array.sort(function (a, b) {
                var index0 = a.split(" ")[0];
                var index1 = b.split(" ")[0];
-               return Number(index0) > Number(index1) ? 1 : -1;
+               /** 校正小数1.2, 1.21的大小比较*/
+               return Number(index0) * 1000 > Number(index1) * 1000 ? 1 : -1;
              }
   );
   return array;
