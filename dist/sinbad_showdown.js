@@ -1517,7 +1517,7 @@ showdown.subParser('simplifiedAutoLinks', function (text, options, globals) {
 });
 
 /**
- * These are all the transformations that form block-level
+ * These are al/l the transformations that form block-level
  * tags like paragraphs, headers, and list items.
  */
 showdown.subParser('blockGamut', function (text, options, globals) {
@@ -1557,7 +1557,7 @@ showdown.subParser('blockGamut', function (text, options, globals) {
         var id = pageTitleArray[i].split(' ')[0];
         if(id.indexOf(".") === -1) {
           /** 一级标题*/
-          pageTitleList += '<a href="#' + id + '">' + pageTitleArray[i] + '</a>';
+          pageTitleList += '<a href="#' + id + '">' + pageTitleArray[i] + '</a><br>';
         } else {
           /** 二级标题*/
           pageTitleList += '<p><a href="#' + id + '">' + pageTitleArray[i] + '</a></p>';
