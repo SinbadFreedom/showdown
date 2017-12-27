@@ -1555,7 +1555,13 @@ showdown.subParser('blockGamut', function (text, options, globals) {
       pageTitleList += '<div class="dsd_catalog">';
       for(var i = 0; i < pageTitleArray.length; i++) {
         var id = pageTitleArray[i].split(' ')[0];
-        pageTitleList += '<p><a href="#' + id + '">' + pageTitleArray[i] + '</a></p>';
+        if(id.indexOf(".") === -1) {
+          /** 一级标题*/
+          pageTitleList += '<a href="#' + id + '">' + pageTitleArray[i] + '</a>';
+        } else {
+          /** 二级标题*/
+          pageTitleList += '<p><a href="#' + id + '">' + pageTitleArray[i] + '</a></p>';
+        }
         // if(i < pageTitleArray.length -1){
         //   /** 加入横线*/
         //   pageTitleList += '<hr>';
