@@ -20,9 +20,9 @@ showdown.subParser('headers', function (text, options, globals) {
     var spanGamut = showdown.subParser('spanGamut')(m1, options, globals),
         hID = (options.noHeaderId) ? '' : ' id="' + headerId(m1) + '"',
         hLevel = headerLevelStart,
-      /** 一级标题 ===*/
+      /** 二级标题 ---*/
         // hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
-      hashBlock = '<div class="dsd_title_1"><a href="#top" ' + hID + '><h2>' + spanGamut + '</h2></a></div>';
+      hashBlock = '<div class="dsd_title_1"><a href="#top" ' + hID + '><h3>' + spanGamut + '</h3></a></div>';
     // hashBlock = '<div class="dsd_title"><h1>' + spanGamut +'</h1></div>';
     return showdown.subParser('hashBlock')(hashBlock, options, globals);
     // /** 这里移除一级标题, 采用pageTitle显示*/
