@@ -1,4 +1,4 @@
-;/*! sinbad_showdown 18-02-2018 */
+;/*! sinbad_showdown 23-02-2018 */
 (function(){
 /**
  * Created by Tivie on 13-07-2015.
@@ -2132,9 +2132,10 @@ showdown.subParser('headers', function (text, options, globals) {
     var spanGamut = showdown.subParser('spanGamut')(m1, options, globals),
         hID = (options.noHeaderId) ? '' : ' id="' + headerId(m1) + '"',
         hLevel = headerLevelStart,
-      /** 二级标题 ---*/
+      /** 一级标题 ===*/
         // hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
-      hashBlock = '<div class="dsd_title_1"><a href="#top" ' + hID + '><h3>' + spanGamut + '</h3></a></div>';
+        // hashBlock = '<div class="dsd_title_1"><a href="#top" ' + hID + '>' + spanGamut + '</a></div>';
+        hashBlock = '<div' + hID + '><h3>' + spanGamut + '</h3></div>';
     // hashBlock = '<div class="dsd_title"><h1>' + spanGamut +'</h1></div>';
     return showdown.subParser('hashBlock')(hashBlock, options, globals);
     // /** 这里移除一级标题, 采用pageTitle显示*/
@@ -2150,7 +2151,8 @@ showdown.subParser('headers', function (text, options, globals) {
       /** 二级标题 ---*/
         // hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
         // hashBlock = '<h4' + hID + ' class="alert alert-success" >' + spanGamut + '</h4>';
-        hashBlock = '<div class="dsd_title_2"><a href="#top" ' + hID + '>' + spanGamut + '</a></div>';
+        // hashBlock = '<div class="dsd_title_2"><a href="#top" ' + hID + '>' + spanGamut + '</a></div>';
+        hashBlock = '<div' + hID + '><h4>' + spanGamut + '</h4></div>';
     return showdown.subParser('hashBlock')(hashBlock, options, globals);
   });
 
