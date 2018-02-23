@@ -35,19 +35,21 @@ showdown.subParser('blockGamut', function (text, options, globals) {
     /** 子标题*/
     if(pageTitleArray.length > 0) {
       pageTitleList += '<div class="dsd_catalog">';
+      pageTitleList += '<h3>目录</h3><br>';
       for(var i = 0; i < pageTitleArray.length; i++) {
         var id = pageTitleArray[i].split(' ')[0];
         if(id.indexOf(".") === -1) {
           /** 一级标题*/
-          pageTitleList += '<a href="#' + id + '">' + pageTitleArray[i] + '</a><br>';
+          pageTitleList += '<a href="#' + id + '">' + pageTitleArray[i] + '</a>';
         } else {
-          /** 二级标题*/
-          pageTitleList += '<p class="dsd_title_2"><a href="#' + id + '>' + pageTitleArray[i] + '</a></p>';
+          /** 二级标题 加入4个空格*/
+          pageTitleList += '<a href="#' + id + '">&nbsp;&nbsp;' + pageTitleArray[i] + '</a>';
         }
-        // if(i < pageTitleArray.length -1){
-        //   /** 加入横线*/
-        //   pageTitleList += '<hr>';
-        // }
+
+        if(i < pageTitleArray.length -1){
+          /** 换行*/
+          pageTitleList += '<br>';
+        }
       }
       pageTitleList += '</div>';
     }
