@@ -1560,7 +1560,7 @@ showdown.subParser('blockGamut', function (text, options, globals) {
           pageTitleList += '<a href="#' + id + '">' + pageTitleArray[i] + '</a><br>';
         } else {
           /** 二级标题*/
-          pageTitleList += '<p><a href="#' + id + ' class="dsd_title_2">' + pageTitleArray[i] + '</a></p>';
+          pageTitleList += '<p class="dsd_title_2"><a href="#' + id + '>' + pageTitleArray[i] + '</a></p>';
         }
         // if(i < pageTitleArray.length -1){
         //   /** 加入横线*/
