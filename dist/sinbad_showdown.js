@@ -1560,7 +1560,7 @@ showdown.subParser('blockGamut', function (text, options, globals) {
           pageTitleList += '<a href="#' + id + '">' + pageTitleArray[i] + '</a><br>';
         } else {
           /** 二级标题*/
-          pageTitleList += '<p><a href="#' + id + '">' + pageTitleArray[i] + '</a></p>';
+          pageTitleList += '<p><a href="#' + id + ' class="dsd_title_2">' + pageTitleArray[i] + '</a></p>';
         }
         // if(i < pageTitleArray.length -1){
         //   /** 加入横线*/
@@ -2152,7 +2152,7 @@ showdown.subParser('headers', function (text, options, globals) {
         // hashBlock = '<h' + hLevel + hID + '>' + spanGamut + '</h' + hLevel + '>';
         // hashBlock = '<h4' + hID + ' class="alert alert-success" >' + spanGamut + '</h4>';
         // hashBlock = '<div class="dsd_title_2"><a href="#top" ' + hID + '>' + spanGamut + '</a></div>';
-        hashBlock = '<div' + hID + 'class="dsd_title_2"><h4>' + spanGamut + '</h4></div>';
+        hashBlock = '<div' + hID + 'class="dsd_title_c_2"><h4>' + spanGamut + '</h4></div>';
     return showdown.subParser('hashBlock')(hashBlock, options, globals);
   });
 
