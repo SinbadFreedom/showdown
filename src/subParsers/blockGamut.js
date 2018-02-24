@@ -35,7 +35,7 @@ showdown.subParser('blockGamut', function (text, options, globals) {
     /** 子标题*/
     if(pageTitleArray.length > 0) {
       pageTitleList += '<div class="dsd_catalog">';
-      pageTitleList += '<h3>目录</h3><br>';
+      pageTitleList += '<h3>目录</h3>';
       for(var i = 0; i < pageTitleArray.length; i++) {
         var id = pageTitleArray[i].split(' ')[0];
         if(id.indexOf(".") === -1) {
