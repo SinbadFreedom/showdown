@@ -348,7 +348,7 @@ the end
 </canvas>
 
 <figure>
-    <img src="mypic.png" alt="An awesome picture">
+    < src="mypic.png" alt="An awesome picture">
     <figcaption>Caption for the awesome picture</figcaption>
 </figure>
 
@@ -361,9 +361,9 @@ the end
   
  
 
-![Alt text](/path/to/img.jpg)
+![Alt text](/path/to/.jpg)
 
-![Alt text](/path/to/img.jpg "Optional title")
+![Alt text](/path/to/.jpg "Optional title")
 
 ![Alt text][id]
 
@@ -672,13 +672,13 @@ something _else _bla
 something __else __bla
   
  
-http://website.com/img@x2.jpg
+http://website.com/@x2.jpg
 
-http://website.com/img-x2.jpg
+http://website.com/-x2.jpg
 
-http://website.com/img@x2
+http://website.com/@x2
 
-http://website.com/img@.jpg
+http://website.com/@.jpg
   
  
 a simple
@@ -959,7 +959,7 @@ APPROVED | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
  
 | First Header  | Second Header     |
 | ------------- | ----------------- |
-| **bold**      | ![img](foo.jpg)   |
+| **bold**      | ![](foo.jpg)   |
 | _italic_      | [link](bla.html)  |
 | `some code`   | [google][1]       |
 | <www.foo.com> | normal            |
@@ -1075,7 +1075,7 @@ var foo_bar_baz_bar_foo = "foo_bar_";
 
 <a href="http://myurl.com/foo_bar_baz_bar_foo" title="foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo">foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo</a>
 
-<img src="http://myurl.com/foo_bar_baz_bar_foo" alt="foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo">
+< src="http://myurl.com/foo_bar_baz_bar_foo" alt="foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo">
 
 foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo
 -----
@@ -1613,7 +1613,13 @@ If you don't believe me: HEX EDIT!
 
   
  
-These lines all end with end of line (EOL) sequences.Seriously, they really do.If you don't believe me: HEX EDIT!  
+These lines all end with end of line (EOL) sequences.
+
+Seriously, they really do.
+
+If you don't believe me: HEX EDIT!
+
+  
  
 These lines all end with end of line (EOL) sequences.
 
@@ -1691,18 +1697,18 @@ ___
  
 ![HTML5][h5]
 
-[h5]: http://www.w3.org/html/logo/img/mark-word-icon.png "HTML5 for everyone"
+[h5]: http://www.w3.org/html/logo//mark-word-icon.png "HTML5 for everyone"
   
  
 ![HTML5][h5]
 
-[h5]: http://www.w3.org/html/logo/img/mark-word-icon.png
+[h5]: http://www.w3.org/html/logo//mark-word-icon.png
   
  
-![HTML5](http://www.w3.org/html/logo/img/mark-word-icon.png "HTML5 logo for everyone")
+![HTML5](http://www.w3.org/html/logo//mark-word-icon.png "HTML5 logo for everyone")
   
  
-![HTML5](http://www.w3.org/html/logo/img/mark-word-icon.png)
+![HTML5](http://www.w3.org/html/logo//mark-word-icon.png)
   
  
 We love `<code> and &` for everything

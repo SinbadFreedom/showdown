@@ -1,7 +1,7 @@
-var yargs = require('yargs'),
-    fs = require('fs'),
-    Messenger = require('./messenger.js'),
-    showdown = require('../../dist/showdown'),
+var yargs           = require('yargs'),
+    fs              = require('fs'),
+    Messenger       = require('./messenger.js'),
+    showdown        = require('../../dist/sinbad_showdown'),
     showdownOptions = showdown.getDefaultOptions(false);
 
 yargs.reset()
@@ -16,34 +16,34 @@ yargs.reset()
   .help('h')
   .alias('h', 'help')
   .option('i', {
-    alias : 'input',
+    alias: 'input',
     describe: 'Input source. Usually a md file. If omitted or empty, reads from stdin',
     type: 'string'
   })
   .option('o', {
-    alias : 'output',
+    alias: 'output',
     describe: 'Output target. Usually a html file. If omitted or empty, writes to stdout',
     type: 'string',
     default: false
   })
   .option('u', {
-    alias : 'encoding',
+    alias: 'encoding',
     describe: 'Input encoding',
     type: 'string'
   })
   .option('a', {
-    alias : 'append',
+    alias: 'append',
     describe: 'Append data to output instead of overwriting',
     type: 'string',
     default: false
   })
   .option('e', {
-    alias : 'extensions',
+    alias: 'extensions',
     describe: 'Load the specified extensions. Should be valid paths to node compatible extensions',
     type: 'array'
   })
   .option('p', {
-    alias : 'flavor',
+    alias: 'flavor',
     describe: 'Run with a predetermined flavor of options. Default is vanilla',
     type: 'string'
   })
@@ -58,6 +58,11 @@ yargs.reset()
     description: 'Mute mode. Does not print anything',
     type: 'boolean',
     default: false
+  })
+  .option('t', {
+    alias: 'convert type',
+    description: 'Select convert file type for different usage.',
+    choices: ['pc', 'mip', 'aip']
   });
 
 // load showdown default options
@@ -72,24 +77,27 @@ for (var opt in showdownOptions) {
   }
 }
 
-function run () {
+function run() {
   'use strict';
-  var argv = yargs.argv,
-      readMode = (!argv.i || argv.i === '') ? 'stdin' : 'file',
-      writeMode = (!argv.o || argv.o === '') ? 'stdout' : 'file',
-      msgMode = (writeMode === 'file') ? 'stdout' : 'stderr',
+  var argv        = yargs.argv,
+      readMode    = (!argv.i || argv.i === '') ? 'stdin' : 'file',
+      writeMode   = (!argv.o || argv.o === '') ? 'stdout' : 'file',
+      msgMode     = (writeMode === 'file') ? 'stdout' : 'stderr',
       /**
        * MSG object
        * @type {Messenger}
        */
-      messenger = new Messenger(msgMode, argv.q, argv.m),
-      read = (readMode === 'stdin') ? readFromStdIn : readFromFile,
-      write = (writeMode === 'stdout') ? writeToStdOut : writeToFile,
-      enc = argv.encoding || 'utf8',
-      flavor =  argv.p,
-      append = argv.a || false,
-      options = parseOptions(flavor),
-      converter = new showdown.Converter(options),
+      messenger   = new Messenger(msgMode, argv.q, argv.m),
+      read        = (readMode === 'stdin') ? readFromStdIn : readFromFile,
+      write       = (writeMode === 'stdout') ? writeToStdOut : writeToFile,
+      enc         = argv.encoding || 'utf8',
+      flavor      = argv.p,
+      append      = argv.a || false,
+      options     = parseOptions(flavor),
+      /** 转化类型, pc, mip, aip*/
+      convertType = argv.t,
+      options     = parseConvertType(options, convertType),
+      converter   = new showdown.Converter(options),
       md, html;
 
   // Load extensions
@@ -120,8 +128,8 @@ function run () {
   write(html, append);
   messenger.okExit();
 
-  function parseOptions (flavor) {
-    var options = {},
+  function parseOptions(flavor) {
+    var options    = {},
         flavorOpts = showdown.getFlavorOptions(flavor) || {};
 
     // if flavor is not undefined, let's tell the user we're loading that preset
@@ -156,7 +164,12 @@ function run () {
     return options;
   }
 
-  function readFromStdIn () {
+  function parseConvertType(options, convertType) {
+    options.convertType = convertType;
+    return options;
+  }
+
+  function readFromStdIn() {
     try {
       var size = fs.fstatSync(process.stdin.fd).size;
       return size > 0 ? fs.readSync(process.stdin.fd, size)[0] : '';
@@ -166,7 +179,7 @@ function run () {
     }
   }
 
-  function readFromFile (encoding) {
+  function readFromFile(encoding) {
     try {
       return fs.readFileSync(argv.i, encoding);
     } catch (err) {
@@ -174,11 +187,11 @@ function run () {
     }
   }
 
-  function writeToStdOut (html) {
+  function writeToStdOut(html) {
     return process.stdout.write(html);
   }
 
-  function writeToFile (html, append) {
+  function writeToFile(html, append) {
     // If a flag is passed, it means we should append instead of overwriting.
     // Only works with files, obviously
     var write = (append) ? fs.appendFileSync : fs.writeFileSync;

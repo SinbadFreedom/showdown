@@ -35,7 +35,7 @@ var foo_bar_baz_bar_foo = "foo_bar_";
 
 <a href="http://myurl.com/foo_bar_baz_bar_foo" title="foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo">foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo</a>
 
-<img src="http://myurl.com/foo_bar_baz_bar_foo" alt="foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo">
+< src="http://myurl.com/foo_bar_baz_bar_foo" alt="foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo">
 
 foo_bar_baz foo_bar_baz_bar_foo _foo_bar baz_bar_ baz_foo
 -----

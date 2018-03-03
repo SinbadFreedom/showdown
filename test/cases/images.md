@@ -1,7 +1,7 @@
 
-![Alt text](/path/to/img.jpg)
+![Alt text](/path/to/.jpg)
 
-![Alt text](/path/to/img.jpg "Optional title")
+![Alt text](/path/to/.jpg "Optional title")
 
 ![Alt text][id]
 

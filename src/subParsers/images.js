@@ -1,5 +1,5 @@
 /**
- * Turn Markdown image shortcuts into <img> tags.
+ * Turn Markdown image shortcuts into <> tags.
  */
 showdown.subParser('images', function (text, options, globals) {
   'use strict';
@@ -11,7 +11,7 @@ showdown.subParser('images', function (text, options, globals) {
       referenceRegExp   = /!\[([^\]]*?)] ?(?:\n *)?\[(.*?)]()()()()()/g,
       refShortcutRegExp = /!\[([^\[\]]+)]()()()()()/g;
 
-  function writeImageTag (wholeMatch, altText, linkId, url, width, height, m5, title) {
+  function writeImageTag(wholeMatch, altText, linkId, url, width, height, m5, title) {
 
     var gUrls   = globals.gUrls,
         gTitles = globals.gTitles,
@@ -49,27 +49,34 @@ showdown.subParser('images', function (text, options, globals) {
 
     altText = altText
       .replace(/"/g, '&quot;')
-    //altText = showdown.helper.escapeCharacters(altText, '*_', false);
+      //altText = showdown.helper.escapeCharacters(altText, '*_', false);
       .replace(showdown.helper.regexes.asteriskAndDash, showdown.helper.escapeCharactersCallback);
     //url = showdown.helper.escapeCharacters(url, '*_', false);
     url = url.replace(showdown.helper.regexes.asteriskAndDash, showdown.helper.escapeCharactersCallback);
-    // var result = '<img src="' + url + '" alt="' + altText + '"';
-    var result = '<img class="center-block img-responsive" src="' + url + '" alt="' + altText + '"';
+    // var result = '< src="' + url + '" alt="' + altText + '"';
+    /** 默认转化为pc img*/
+    var result = '< class="center-block -responsive" src="' + url + '" alt="' + altText + '"';
+    if (options.convertType == "mip") {
+      /** 转化 mip img*/
+      result = '<mip-img layout="responsive" src="' + url + '" alt="' + altText + '"';
+    }
 
     if (title) {
       title = title
         .replace(/"/g, '&quot;')
-      //title = showdown.helper.escapeCharacters(title, '*_', false);
+        //title = showdown.helper.escapeCharacters(title, '*_', false);
         .replace(showdown.helper.regexes.asteriskAndDash, showdown.helper.escapeCharactersCallback);
       result += ' title="' + title + '"';
     }
 
-    if (width && height) {
-      width  = (width === '*') ? 'auto' : width;
-      height = (height === '*') ? 'auto' : height;
-
-      result += ' width="' + width + '"';
-      result += ' height="' + height + '"';
+    if (options.convertType == "mip") {
+      /** 只有mip站添加width和height, pc站采用图片居中, 不加width和height*/
+      if (width && height) {
+        width = (width === '*') ? 'auto' : width;
+        height = (height === '*') ? 'auto' : height;
+        result += ' width="' + width + '"';
+        result += ' height="' + height + '"';
+      }
     }
 
     result += ' />';
@@ -87,7 +94,7 @@ showdown.subParser('images', function (text, options, globals) {
   // normal cases
   text = text.replace(inlineRegExp, writeImageTag);
 
-  // handle reference-style shortcuts: |[img text]
+  // handle reference-style shortcuts: |[ text]
   text = text.replace(refShortcutRegExp, writeImageTag);
 
   text = globals.converter._dispatch('images.after', text, options, globals);

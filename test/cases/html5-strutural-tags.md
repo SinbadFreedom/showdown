@@ -57,7 +57,7 @@ the end
 </canvas>
 
 <figure>
-    <img src="mypic.png" alt="An awesome picture">
+    < src="mypic.png" alt="An awesome picture">
     <figcaption>Caption for the awesome picture</figcaption>
 </figure>
 
