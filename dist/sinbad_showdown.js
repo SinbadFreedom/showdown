@@ -2305,7 +2305,7 @@ showdown.subParser('images', function (text, options, globals) {
     url = url.replace(showdown.helper.regexes.asteriskAndDash, showdown.helper.escapeCharactersCallback);
     // var result = '< src="' + url + '" alt="' + altText + '"';
     /** 默认转化为pc img*/
-    var result = '< class="center-block -responsive" src="' + url + '" alt="' + altText + '"';
+    var result = '<img class="center-block img-responsive" src="' + url + '" alt="' + altText + '"';
     if (options.convertType == "mip") {
       /** 转化 mip img*/
       result = '<mip-img layout="responsive" src="' + url + '" alt="' + altText + '"';
