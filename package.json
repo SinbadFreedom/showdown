@@ -1,6 +1,6 @@
 {
   "name": "sinbad_showdown",
-  "version": "1.0.44",
+  "version": "1.0.45",
   "description": "A Markdown to HTML converter written in Javascript",
   "author": "Sinbad",
   "homepage": "https://github.com/SinbadFreedom/showdown",
