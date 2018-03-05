@@ -1,4 +1,4 @@
-;/*! sinbad_showdown 03-03-2018 */
+;/*! sinbad_showdown 06-03-2018 */
 (function(){
 /**
  * Created by Tivie on 13-07-2015.
@@ -2305,10 +2305,16 @@ showdown.subParser('images', function (text, options, globals) {
     url = url.replace(showdown.helper.regexes.asteriskAndDash, showdown.helper.escapeCharactersCallback);
     // var result = '< src="' + url + '" alt="' + altText + '"';
     /** 默认转化为pc img*/
-    var result = '<img class="center-block img-responsive" src="' + url + '" alt="' + altText + '"';
+    var result;
     if (options.convertType == "mip") {
       /** 转化 mip img*/
       result = '<mip-img layout="responsive" src="' + url + '" alt="' + altText + '"';
+    } else if (options.convertType == "amp") {
+      /** amp*/
+      result = '<amp-img layout="responsive" src="' + url + '" alt="' + altText + '"';
+    } else {
+      /** pc*/
+      result = '<img class="center-block img-responsive" src="' + url + '" alt="' + altText + '"';
     }
 
     if (title) {
@@ -2319,8 +2325,8 @@ showdown.subParser('images', function (text, options, globals) {
       result += ' title="' + title + '"';
     }
 
-    if (options.convertType == "mip") {
-      /** 只有mip站添加width和height, pc站采用图片居中, 不加width和height*/
+    if (options.convertType == "mip" || options.convertType == "amp") {
+      /** 只有mip/amp站添加width和height, pc站采用图片居中, 不加width和height*/
       if (width && height) {
         width = (width === '*') ? 'auto' : width;
         height = (height === '*') ? 'auto' : height;
@@ -2329,7 +2335,13 @@ showdown.subParser('images', function (text, options, globals) {
       }
     }
 
-    result += ' />';
+    if (options.convertType == "mip") {
+      result += '></mip-img>';
+    } else if (options.convertType == "amp") {
+      result += '></amp-img>';
+    } else {
+      result += ' />';
+    }
 
     return result;
   }
