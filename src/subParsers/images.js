@@ -58,10 +58,10 @@ showdown.subParser('images', function (text, options, globals) {
     var result;
     if (options.convertType == "mip") {
       /** 转化 mip img*/
-      result = '<mip-img layout="responsive" src="' + url + '" alt="' + altText + '"';
+      result = '<mip-img src="' + url + '" alt="' + altText + '"';
     } else if (options.convertType == "amp") {
       /** amp*/
-      result = '<amp-img layout="responsive" src="' + url + '" alt="' + altText + '"';
+      result = '<amp-img src="' + url + '" alt="' + altText + '"';
     } else {
       /** pc*/
       result = '<img class="center-block img-responsive" src="' + url + '" alt="' + altText + '"';
